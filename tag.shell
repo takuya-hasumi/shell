@@ -1,0 +1,17 @@
+#!bin/bash
+# 要件：scriptタグをHTMLファイルの</head>の直前に入れる
+# invhtml/www.innvation.co.jp内のHTMLファイルを取得
+# 取得したHTMLファイルをループさせる
+# ファイル内の</head>タグを探す
+# </head>タグの直前にscript.jsの内容を入れる
+
+result=`find ./invhtml -name '*.html'`
+head='</head>'
+tag=`cat ./script.js`
+replacement=$tag"\n"$head
+# echo $replacement
+for i in $result
+do
+  html=`cat $i | grep -i '<\/head>' | xargs sed -i -e 's/<\/head>/'$replacement'/ig'`
+done
+
